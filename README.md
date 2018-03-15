@@ -16,7 +16,7 @@
 * better-scroll默认滚动方向是scrollY，如果想要水平滚动必须设置scrollX:true
 
 
->>>>>>> vue第一天
+>>>>>>>
 
 
 ## 第二天 03.15
