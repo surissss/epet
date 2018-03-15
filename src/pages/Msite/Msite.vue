@@ -1,6 +1,6 @@
 <template>
   <div class="msite">
-    <DownloadApp />
+    <!--<DownloadApp class="Download"/>-->
     <div class="indexBox">
       <div class="indexHeader">
         <div class="search">
@@ -24,7 +24,7 @@
         </div>
         <div class="swiper-container" id="topMenuSwiper">
           <ul class="swiper-wrapper" >
-            <li class="swiper-slide" v-for="(menu,index) in headerMenus" :key="index" @click="tab(index)">
+            <li class="swiper-slide" v-for="(menu,index) in msiteData.headerMenus" :key="index" @click="tab(index)">
               <a href="javascript:;" :ref="menu.menu_name" :class="{on: index === num}">
                 <span>{{menu.menu_name}}</span>
                 <i></i>
@@ -33,10 +33,48 @@
           </ul>
         </div>
       </div>
-      <div class="indexContent">
-        <MsiteCarousel />
-        <div class="dogImg">
-          <img src="./dog.jpg" alt="">
+      <div class="indexContent" id="indexContent">
+        <div class="scrollWrapper">
+          <!--大图轮播-->
+          <MsiteCarousel />
+          <div class="dogImg"><img :src="msiteData.otherImgs[0]"></div>
+          <div class="hotTypes">
+            <ul>
+              <li v-for="(item,index) in msiteData.hotTypes" :key="index"><a href="javascript:;" ><img :src="item.image"></a></li>
+            </ul>
+          </div>
+          <!--每日惊喜-->
+          <DailySale />
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[1]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[2]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[3]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[4]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[5]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[6]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[7]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[8]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[9]">
+          </div>
+          <div class="commonImg">
+            <img :src="msiteData.otherImgs[10]">
+          </div>
         </div>
       </div>
     </div>
@@ -46,36 +84,45 @@
 <script>
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
+  import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
-  import DownloadApp from '../../components/DownloadApp/DownloadApp.vue'
   import MsiteCarousel from '../../components/MsiteCarousel/MsiteCarousel.vue'
+  import DailySale from '../../components/DailySale/DailySale.vue'
+  //import DownloadApp from '../../components/DownloadApp/DownloadApp.vue'
   export default{
     data () {
       return {
-        num: 1
+        num: 0
       }
     },
     mounted () {
-      this.$store.dispatch('getHeaderMenus', () => {
+      this.$store.dispatch('getHeaderMenus')
+      this.$store.dispatch('getHotTypes')
+      this.$store.dispatch('getOtherImags',()=>{
         this.$nextTick(()=>{
           var topMenuSwiper = new Swiper('#topMenuSwiper',{
             preventClicks: false,
             slidesPerView: 5
           })
+
+          this.myScroll = new BScroll('#indexContent',{
+            click: true
+          })
         })
       })
     },
     computed: {
-      ...mapState(['headerMenus'])
+      ...mapState(['msiteData'])
     },
     methods: {
       tab(index) {
         this.num = index
+        console.log("1231231",this.msiteData.headerMenus)
       }
     },
     components: {
-      DownloadApp,
-      MsiteCarousel
+      MsiteCarousel,
+      DailySale
     }
   }
 </script>
@@ -84,11 +131,23 @@
   .msite
     width 100%
     height 100%
-    background-color #ffffff
+    background-color white
     .indexBox
       width 100%
+      height 100%
+      box-sizing border-box
+      position relative
+      padding-top 86px
+      padding-bottom 46px
       .indexHeader
         width 100%
+        background-color #ffffff
+        position fixed
+        top 0
+        left 0
+        right 0
+        z-index 100
+        overflow hidden
         .search
           width 100%
           height 51px
@@ -141,8 +200,7 @@
             a
               img
                 height 100%
-
-        .swiper-container
+        #topMenuSwiper
           width 100%
           height 35px
           .swiper-wrapper
@@ -160,5 +218,32 @@
                 &.on
                   color #e73f85
                   border-bottom 2px solid #e73f85
+      .indexContent
+        width 100%
+        height 100%
+        .scrollWrapper
+          .hotTypes
+            width 100%
+            ul
+              width 100%
+              display flex
+              flex-wrap wrap
+              li
+                width 20%
+                a
+                  width 100%
+                  img
+                    width 100%
+                    display block
 
+          .dogImg
+            width 100%
+            img
+              display block
+              width 100%
+          .commonImg
+            width 100%
+            img
+              display block
+              width 100%
 </style>

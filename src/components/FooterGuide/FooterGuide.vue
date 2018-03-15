@@ -35,7 +35,7 @@
     right 0
     bottom 0
     background-color #ffffff
-    width 375px
+    width 100%
     height 45px
     border-top 1px solid #e7e7e7
     display flex

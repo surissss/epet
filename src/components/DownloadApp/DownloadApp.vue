@@ -28,6 +28,7 @@
   .downloadApp
     width 100%
     position relative
+    z-index 100
     box-sizing border-box
     .closebtn
       width 5%

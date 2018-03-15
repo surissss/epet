@@ -1,41 +1,58 @@
 <template>
-  <div class="swiper-container" id="LunboSwiper">
-    <ul class="swiper-wrapper" >
-      <li class="swiper-slide"><img src="./1.jpg"></li>
-      <li class="swiper-slide"><img src="./2.jpg"></li>
-      <li class="swiper-slide"><img src="./3.jpg"></li>
-      <li class="swiper-slide"><img src="./4.jpg"></li>
-      <li class="swiper-slide"><img src="./5.jpg"></li>
-      <li class="swiper-slide"><img src="./6.jpg"></li>
-    </ul>
+  <div class="dogSwiper">
+    <div class="swiper-container" id="LunboSwiper">
+      <ul class="swiper-wrapper" >
+        <li class="swiper-slide" v-for="(item, index) in msiteData.lunboImgs" :key="index">
+          <a href="javascript:;"><img :src="item.image"></a>
+        </li>
+      </ul>
+      <div class="swiper-pagination"></div>
+    </div>
   </div>
 </template>
 
 <script>
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
+  import {mapState} from 'vuex'
   export default{
     data () {
       return {
-        imgsNum: [1,2,3,4,5,6]
+        imgsNum: [1, 2, 3, 4, 5, 6]
       }
     },
     mounted () {
-      const LunboSwiper = new Swiper('#LunboSwiper',{
-        preventClicks: false,
-        loop: true
+      this.$store.dispatch('getLunboImgs', ()=>{
+        this.$nextTick(()=>{
+          const LunboSwiper = new Swiper('#LunboSwiper', {
+            preventClicks: false,
+            loop: true,
+            autoplay: true,
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            }
+          })
+        })
       })
+
+    },
+    computed:{
+      ...mapState(['msiteData'])
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  #LunboSwiper
+  .dogSwiper
     width 100%
-    ul
+    #LunboSwiper
       width 100%
-      li
+      ul
         width 100%
-        img
+        li
           width 100%
+          img
+            display block
+            width 100%
 </style>
