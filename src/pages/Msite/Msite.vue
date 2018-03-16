@@ -33,21 +33,20 @@
           </ul>
         </div>
       </div>
-      <div class="indexContent" id="indexContent">
+      <div class="indexContent" id="indexContent" >
         <div class="scrollWrapper">
           <!--大图轮播-->
-          <MsiteCarousel />
+          <MsiteCarousel :carouselImgs="msiteData.lunboImgs[0]"/>
           <div class="dogImg"><img :src="msiteData.otherImgs[0]"></div>
           <div class="hotTypes">
             <ul>
               <li v-for="(item,index) in msiteData.hotTypes" :key="index"><a href="javascript:;" ><img :src="item.image"></a></li>
             </ul>
           </div>
-          <!--每日惊喜-->
-          <DailySale />
           <div class="commonImg">
             <img :src="msiteData.otherImgs[1]">
           </div>
+          <DailySale /> <!--每日惊喜-->
           <div class="commonImg">
             <img :src="msiteData.otherImgs[2]">
           </div>
@@ -57,11 +56,16 @@
           <div class="commonImg">
             <img :src="msiteData.otherImgs[4]">
           </div>
+          <Activities :itemContainers="msiteData.commonImgs[0]"/>
           <div class="commonImg">
             <img :src="msiteData.otherImgs[5]">
           </div>
+          <MsiteCarousel :carouselImgs="msiteData.lunboImgs[1]"/>
           <div class="commonImg">
             <img :src="msiteData.otherImgs[6]">
+          </div>
+          <div>
+            <Activities v-for="(itemContainers,index) in msiteData.advertImgs" :key="index" :itemContainers="itemContainers"/> <!--活动组件-->
           </div>
           <div class="commonImg">
             <img :src="msiteData.otherImgs[7]">
@@ -72,11 +76,23 @@
           <div class="commonImg">
             <img :src="msiteData.otherImgs[9]">
           </div>
+          <Activities :itemContainers="msiteData.commonImgs[1]"/>
           <div class="commonImg">
             <img :src="msiteData.otherImgs[10]">
           </div>
+          <Activities :itemContainers="msiteData.commonImgs[2]"/>
+          <div class="bottom">
+            <div class="firstLine">
+              <span>触屏版</span>
+              <span><a href="javascript:;">手机客户端</a></span>
+              <span><a href="javascript:;">关于我们</a></span>
+              <span><a href="javascript:;">联系我们</a></span>
+            </div>
+            <div class="lastLine">© wap.epet.com 版权：重庆易宠科技有限公司</div>
+          </div>
         </div>
       </div>
+      <div class="goCat"></div>
     </div>
   </div>
 </template>
@@ -88,6 +104,7 @@
   import {mapState} from 'vuex'
   import MsiteCarousel from '../../components/MsiteCarousel/MsiteCarousel.vue'
   import DailySale from '../../components/DailySale/DailySale.vue'
+  import Activities from '../../components/Activities/Activities.vue'
   //import DownloadApp from '../../components/DownloadApp/DownloadApp.vue'
   export default{
     data () {
@@ -96,15 +113,22 @@
       }
     },
     mounted () {
-      this.$store.dispatch('getHeaderMenus')
-      this.$store.dispatch('getHotTypes')
-      this.$store.dispatch('getOtherImags',()=>{
+      this.$store.dispatch('getHeaderMenus',()=>{
         this.$nextTick(()=>{
           var topMenuSwiper = new Swiper('#topMenuSwiper',{
             preventClicks: false,
             slidesPerView: 5
           })
+        })
+      })
+      this.$store.dispatch('getLunboImgs', ()=>{
 
+      })
+      this.$store.dispatch('getHotTypes')
+      this.$store.dispatch('getAdvertImgs')
+      this.$store.dispatch('getCommonImgs')
+      this.$store.dispatch('getOtherImags',()=>{
+        this.$nextTick(()=>{
           this.myScroll = new BScroll('#indexContent',{
             click: true
           })
@@ -122,12 +146,14 @@
     },
     components: {
       MsiteCarousel,
-      DailySale
+      DailySale,
+      Activities
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+  @import "../../common/stylus/mixins.styl"
   .msite
     width 100%
     height 100%
@@ -246,4 +272,29 @@
             img
               display block
               width 100%
+          .bottom
+            width 100%
+            height 86px
+            margin 1em 0 0
+            .firstLine
+              font-size 14px
+              padding 15px 0 10px
+              text-align center
+              span
+                padding-right 8px
+                a
+                  color #333
+                &:nth-child(1)
+                  color red
+            .lastLine
+              text-align center
+              margin 0 10px
+              padding-bottom 25px
+              font-size 12px
+      .goCat
+        animate("./gocat.png")
+        position fixed
+        bottom 15%
+        right -1px
+        z-index 1000
 </style>

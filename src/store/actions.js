@@ -6,14 +6,17 @@ import {
   reqHotTypes,
   reqLunboImgs,
   reqOtherImgs,
-  reqDailySale
+  reqDailySale,
+  reqAdvertImgs
 } from '../api'
 import {
   RECEIVE_HEADERMENUS,
   RECEIVE_LUNBOIMGS,
   RECEIVE_HOTTYPES,
   RECEIVE_OTHERIMGS,
-  RECEIVE_DAILYSALE
+  RECEIVE_DAILYSALE,
+  RECEIVE_ADVERTIMGS,
+  RECEIVE_COMMONIMGS
 } from './mutation-types'
 /*
  使用async和await的作用:
@@ -35,9 +38,10 @@ export default {
     }
   },
 
-  // 异步获取顶部图片轮播数据
+  // 异步图片轮播数据
   async getLunboImgs({commit}, callback) {
     const result = await reqLunboImgs()
+    console.log("轮播",result)
     if(result.code===0) {
       const lunboImgs = result.data
       commit(RECEIVE_LUNBOIMGS, {lunboImgs})
@@ -71,6 +75,30 @@ export default {
     if(result.code===0) {
       const dailySale = result.data
       commit(RECEIVE_DAILYSALE, {dailySale})
+      callback && callback()
+    }
+  },
+
+  // 异步获取5个活动列表数据
+  async getAdvertImgs({commit}, callback) {
+    const result = await reqAdvertImgs()
+    if(result.code===0) {
+      const advertImgs = result.data.slice(1,6)
+      console.log("advertImgs",advertImgs)
+      commit(RECEIVE_ADVERTIMGS, {advertImgs})
+      callback && callback()
+    }
+  },
+
+  // 获取3个广告列表数据
+  async getCommonImgs({commit}, callback) {
+    const result = await reqAdvertImgs()
+    if(result.code===0) {
+      const commonImgs = result.data.filter((item,index) => {
+        return index ===0 || index >5
+      })
+      console.log("commonImgs",commonImgs)
+      commit(RECEIVE_COMMONIMGS, {commonImgs})
       callback && callback()
     }
   },

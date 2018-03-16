@@ -1,8 +1,8 @@
 <template>
   <div class="dogSwiper">
-    <div class="swiper-container" id="LunboSwiper">
+    <div class="swiper-container lunboSwiper" ref="lunboSwiper">
       <ul class="swiper-wrapper" >
-        <li class="swiper-slide" v-for="(item, index) in msiteData.lunboImgs" :key="index">
+        <li class="swiper-slide" v-for="(item, index) in carouselImgs" :key="index">
           <a href="javascript:;"><img :src="item.image"></a>
         </li>
       </ul>
@@ -16,15 +16,13 @@
   import 'swiper/dist/css/swiper.min.css'
   import {mapState} from 'vuex'
   export default{
-    data () {
-      return {
-        imgsNum: [1, 2, 3, 4, 5, 6]
-      }
+    props: {
+      carouselImgs:Array
     },
-    mounted () {
-      this.$store.dispatch('getLunboImgs', ()=>{
+    watch:{
+      carouselImgs () {
         this.$nextTick(()=>{
-          const LunboSwiper = new Swiper('#LunboSwiper', {
+          const LunboSwiper = new Swiper(this.$refs.lunboSwiper, {
             preventClicks: false,
             loop: true,
             autoplay: true,
@@ -34,11 +32,7 @@
             }
           })
         })
-      })
-
-    },
-    computed:{
-      ...mapState(['msiteData'])
+      }
     }
   }
 </script>
@@ -46,7 +40,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .dogSwiper
     width 100%
-    #LunboSwiper
+    .lunboSwiper
       width 100%
       ul
         width 100%

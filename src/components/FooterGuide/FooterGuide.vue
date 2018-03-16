@@ -4,7 +4,7 @@
       <a href="javascript:;" :class="{on: $route.path==='/msite'}"></a>
     </span>
     <span class="guide_item classify" @click="goto('/classify')">
-      <a href="javascript:;" :class="{on: $route.path==='/classify'}"></a>
+      <a href="javascript:;" :class="{on: $route.path==='/classify' || $route.path==='/classify/types' || $route.path==='/classify/brands'}"></a>
     </span>
     <span class="guide_item shopcart" @click="goto('/shopcart')">
       <a href="javascript:;" :class="{on: $route.path==='/shopcart'}"></a>

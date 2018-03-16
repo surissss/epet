@@ -17,3 +17,6 @@ export const reqOtherImgs = () => ajax('/otherimgs')
 
 //获取每日惊喜模块数据
 export const reqDailySale = () => ajax('/dailysale')
+
+//获取通用广告模板图片
+export const reqAdvertImgs = () => ajax('/advertimgs')

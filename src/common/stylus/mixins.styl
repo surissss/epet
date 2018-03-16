@@ -41,10 +41,16 @@ bg-image($url)
   @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
     background-image:url($url+"@3x.png")
 
-//清除浮动
-clearFix()
-*zoom 1
-&::after
-  content ''
-  display block
-  clear both
+//逐帧动画
+animate($url)
+  background url($url) no-repeat
+  background-size 82px 46px
+  width 41px
+  height 46px
+  animation: run 2s steps(1,end) infinite
+  @keyframes run {
+    50% {background-position:-42px 0}
+  }
+
+
+

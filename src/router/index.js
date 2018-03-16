@@ -2,11 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const Msite = () => import('../pages/Msite/Msite.vue')
-//const Classify = () => import('../pages/Classify/Classify.vue')
+
+const Classify = () => import('../pages/Classify/Classify.vue')
+const Types = () => import('../pages/Classify/Types/Types.vue')
+const Brands = () => import('../pages/Classify/Brands/Brands.vue')
+
 const ShopCart = () => import('../pages/ShopCart/ShopCart.vue')
 const MyEpet = () => import('../pages/MyEpet/MyEpet.vue')
-
-import Classify from '../pages/Classify/Classify.vue'
 
 Vue.use(VueRouter)
 
@@ -15,19 +17,48 @@ export default new VueRouter({
   routes: [
     {
       path: '/msite',
-      component: Msite
+      component: Msite,
+      meta: {
+        showFooter: true
+      }
     },
     {
       path: '/classify',
-      component: Classify
+      component: Classify,
+      meta: {
+        showFooter: true
+      },
+      children: [
+        {
+          path: 'types',
+          component:Types,
+          meta: {
+            showFooter: true
+          },
+        },
+        {
+          path: 'brands',
+          component:Brands,
+          meta: {
+            showFooter: true
+          },
+        },
+        {
+          path: '',
+          redirect: '/classify/types'
+        }
+      ]
     },
     {
       path: '/shopcart',
-      component: ShopCart
+      component: ShopCart,
     },
     {
       path: '/myepet',
-      component: MyEpet
+      component: MyEpet,
+      meta: {
+        showFooter: true
+      }
     },
     {
       path: '/',
