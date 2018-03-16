@@ -9,7 +9,8 @@ import {
   RECEIVE_OTHERIMGS,
   RECEIVE_DAILYSALE,
   RECEIVE_ADVERTIMGS,
-  RECEIVE_COMMONIMGS
+  RECEIVE_COMMONIMGS,
+  RECEIVE_BRANDS
 } from './mutation-types'
 
 export default {
@@ -34,5 +35,8 @@ export default {
   },
   [RECEIVE_COMMONIMGS](state, {commonImgs}) {
     state.msiteData.commonImgs = commonImgs
+  },
+  [RECEIVE_BRANDS](state, {brands}) {
+    state.brands = brands
   }
 }

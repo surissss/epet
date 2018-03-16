@@ -7,5 +7,6 @@ export default {
     dailySale: {}, //每日惊喜
     advertImgs: [], // 5个通用广告模板数据
     commonImgs: [], // 3个公共广告数据
-  }
+  },
+  brands:[], // 分类页品牌数据
 }

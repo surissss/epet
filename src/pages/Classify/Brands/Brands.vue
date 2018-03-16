@@ -1,14 +1,34 @@
 <template>
   <div class="brands">
-    <Brandslist />
+    <div class="brandslist" v-for="(items,index) in brands" :key="index">
+      <div class="title">—— {{items.title}} ——</div>
+      <div class="listContainer">
+        <ul class="list">
+          <li class="item" v-for="(brand,index) in items.list" :key="index">
+            <a href="javascript:;">
+              <div class="image"><img :src="brand.logo"></div>
+              <span class="brand name">{{brand.name}}</span>
+              <span class="brand country">{{brand.address}}</span>
+              <span class="recommend" :class="{on:brand.recommend === 1}"><img src="./jian.png"></span>
+              <span class="gongYi" :class="{on:brand.tagongyi === 1}">TA公益</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import Brandslist from '../../../components/Brandslist/Brandslist.vue'
+  import {mapState} from 'vuex'
   export default{
-    components: {
-      Brandslist
+    mounted(){
+      this.$store.dispatch('getBrands',()=>{
+
+      })
+    },
+    computed:{
+      ...mapState(['brands'])
     }
   }
 </script>
@@ -16,5 +36,71 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .brands
     margin-top 5px
-    background-color #fff
+    .brandslist
+      background-color #fff
+      padding-bottom 15px
+      margin-bottom 10px
+      .title
+        color #999
+        font-size 12px
+        padding-top 23px
+        height 39px
+        text-align center
+      .listContainer
+        padding 0 5px
+        .list
+          display flex
+          flex-wrap wrap
+          .item
+            width 33.33%
+            margin-top 20px
+            padding 0 5px
+            a
+              display flex
+              flex-direction column
+              align-items center
+              position relative
+              .image
+                width 100%
+                text-align center
+                border 1px solid #e2e2e2
+                height 62px
+                padding-top 10px
+                img
+                  height 40px
+              .brand
+                height 20px
+                overflow hidden
+                text-overflow ellipsis
+                white-space nowrap
+                &.name
+                  font-size 13px
+                  margin-top 5px
+                  color #333
+                &.country
+                  font-size 12px
+                  color 12px
+              .recommend
+                display none
+                &.on
+                  display block
+                img
+                  width 13px
+                  height 13px
+                  position absolute
+                  top 0
+                  left 0
+              .gongYi
+                position absolute
+                top 0
+                right -1px
+                font-size 12px
+                transform scale(0.89)
+                padding 3px 2px
+                background-color #e44b46
+                color #fff
+                z-index 2
+                display none
+                &.on
+                  display block
 </style>

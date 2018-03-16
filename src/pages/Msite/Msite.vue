@@ -121,9 +121,7 @@
           })
         })
       })
-      this.$store.dispatch('getLunboImgs', ()=>{
-
-      })
+      this.$store.dispatch('getLunboImgs')
       this.$store.dispatch('getHotTypes')
       this.$store.dispatch('getAdvertImgs')
       this.$store.dispatch('getCommonImgs')

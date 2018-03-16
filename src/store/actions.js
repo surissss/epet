@@ -7,7 +7,8 @@ import {
   reqLunboImgs,
   reqOtherImgs,
   reqDailySale,
-  reqAdvertImgs
+  reqAdvertImgs,
+  reqBrands
 } from '../api'
 import {
   RECEIVE_HEADERMENUS,
@@ -16,7 +17,8 @@ import {
   RECEIVE_OTHERIMGS,
   RECEIVE_DAILYSALE,
   RECEIVE_ADVERTIMGS,
-  RECEIVE_COMMONIMGS
+  RECEIVE_COMMONIMGS,
+  RECEIVE_BRANDS
 } from './mutation-types'
 /*
  使用async和await的作用:
@@ -102,4 +104,15 @@ export default {
       callback && callback()
     }
   },
+
+  // 获取3个广告列表数据
+  async getBrands({commit}, callback) {
+    const result = await reqBrands()
+    if(result.code===0) {
+      const brands = result.data
+      console.log("brands",brands)
+      commit(RECEIVE_BRANDS, {brands})
+      callback && callback()
+    }
+  }
 }
