@@ -1,7 +1,7 @@
 <template>
   <div class="hotTypes">
     <ul>
-      <li v-for="(item,index) in msiteData.hotTypes" :key="index"><a href="javascript:;" ><img :src="item.image"></a></li>
+      <li v-for="(item,index) in msiteData.hotTypes" :key="index"><a href="javascript:;" ><img v-lazy="item.image"></a></li>
     </ul>
   </div>
 </template>

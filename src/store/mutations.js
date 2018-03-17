@@ -10,7 +10,9 @@ import {
   RECEIVE_DAILYSALE,
   RECEIVE_ADVERTIMGS,
   RECEIVE_COMMONIMGS,
-  RECEIVE_BRANDS
+  RECEIVE_BRANDS,
+  RECEIVE_TYPESNAME,
+  RECEIVE_TYPESLIST
 } from './mutation-types'
 
 export default {
@@ -38,5 +40,11 @@ export default {
   },
   [RECEIVE_BRANDS](state, {brands}) {
     state.brands = brands
+  },
+  [RECEIVE_TYPESNAME](state, {typesName}) {
+    state.typesName = typesName
+  },
+  [RECEIVE_TYPESLIST](state, {typesList}) {
+    state.typesList = typesList
   }
 }

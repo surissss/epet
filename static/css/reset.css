@@ -94,7 +94,7 @@ body {
 
 /*显示省略号*/
 .ellipsis{
-  overflow: hidden;
+  /*overflow: hidden;*/
   text-overflow: ellipsis;
   white-space: nowrap;
 }

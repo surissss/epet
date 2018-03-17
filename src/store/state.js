@@ -8,5 +8,7 @@ export default {
     advertImgs: [], // 5个通用广告模板数据
     commonImgs: [], // 3个公共广告数据
   },
-  brands:[], // 分类页品牌数据
+  brands: [], // 分类页品牌数据
+  typesName: [], // 分类标题列表
+  typesList: [], // 分类内容列表
 }

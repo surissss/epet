@@ -11,5 +11,7 @@ export const RECEIVE_COMMONIMGS = 'receive_commonimgs' // 接收3个公共列表
 
 
 export const RECEIVE_BRANDS = 'receive_brands' // 接收品牌数据
+export const RECEIVE_TYPESNAME = 'receive_typesname' // 接收分类标题列表
+export const RECEIVE_TYPESLIST = 'receive_typeslist' // 接收分类内容列表
 
 

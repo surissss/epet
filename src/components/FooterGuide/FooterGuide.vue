@@ -20,7 +20,7 @@
     methods: {
       goto (path) {
         // 跳转到指定路径
-        this.$router.replace(path)
+        this.$router.push(path)
       }
     }
   }
@@ -70,5 +70,5 @@
         a
           background-position -85px -122px
           &.on
-            background-position -42px -122px
+            background-position 0 -122px
 </style>

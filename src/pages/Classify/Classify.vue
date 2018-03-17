@@ -9,31 +9,37 @@
           <router-link to="/classify/brands" replace>品牌</router-link>
         </div>
       </div>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
       <div class="search">
         <img src="./search-ico.png">
       </div>
     </div>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-  export default{
+
+export default{
+  mounted () {
 
   }
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   .clssify
     width 100%
     height 100%
+    padding-bottom 45px
+    margin-top 45px
     .header
       position fixed
       top 0
       left 0
       right 0
+      z-index 100
       .tab
         box-sizing border-box
         background-color #ffffff

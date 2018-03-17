@@ -33,52 +33,52 @@
           </ul>
         </div>
       </div>
-      <div class="indexContent" id="indexContent" >
+      <div class="indexContent" ref="indexContent" >
         <div class="scrollWrapper">
           <!--大图轮播-->
           <MsiteCarousel :carouselImgs="msiteData.lunboImgs[0]"/>
-          <div class="dogImg"><img :src="msiteData.otherImgs[0]"></div>
+          <div class="dogImg"><img v-lazy="msiteData.otherImgs[0]"></div>
           <div class="hotTypes">
             <ul>
               <li v-for="(item,index) in msiteData.hotTypes" :key="index"><a href="javascript:;" ><img :src="item.image"></a></li>
             </ul>
           </div>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[1]">
+            <img v-lazy="msiteData.otherImgs[1]">
           </div>
           <DailySale /> <!--每日惊喜-->
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[2]">
+            <img v-lazy="msiteData.otherImgs[2]">
           </div>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[3]">
+            <img v-lazy="msiteData.otherImgs[3]">
           </div>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[4]">
+            <img v-lazy="msiteData.otherImgs[4]">
           </div>
           <Activities :itemContainers="msiteData.commonImgs[0]"/>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[5]">
+            <img v-lazy="msiteData.otherImgs[5]">
           </div>
           <MsiteCarousel :carouselImgs="msiteData.lunboImgs[1]"/>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[6]">
+            <img v-lazy="msiteData.otherImgs[6]">
           </div>
           <div>
             <Activities v-for="(itemContainers,index) in msiteData.advertImgs" :key="index" :itemContainers="itemContainers"/> <!--活动组件-->
           </div>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[7]">
+            <img v-lazy="msiteData.otherImgs[7]">
           </div>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[8]">
+            <img v-lazy="msiteData.otherImgs[8]">
           </div>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[9]">
+            <img v-lazy="msiteData.otherImgs[9]">
           </div>
           <Activities :itemContainers="msiteData.commonImgs[1]"/>
           <div class="commonImg">
-            <img :src="msiteData.otherImgs[10]">
+            <img v-lazy="msiteData.otherImgs[10]">
           </div>
           <Activities :itemContainers="msiteData.commonImgs[2]"/>
           <div class="bottom">
@@ -98,6 +98,7 @@
 </template>
 
 <script>
+  import {Indicator} from 'mint-ui'
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
   import BScroll from 'better-scroll'
@@ -113,6 +114,21 @@
       }
     },
     mounted () {
+      Indicator.open({
+        text: '数据加载中',
+        spinnerType: 'fading-circle'
+      })
+      setTimeout(()=>Indicator.close(),1000)
+
+      if(!this.myScroll) {
+        this.myScroll = new BScroll(this.$refs.indexContent, {
+          click:true
+        })
+      } else {
+        Indicator.close()
+        this.myScroll.refresh()
+      }
+
       this.$store.dispatch('getHeaderMenus',()=>{
         this.$nextTick(()=>{
           var topMenuSwiper = new Swiper('#topMenuSwiper',{
@@ -123,15 +139,11 @@
       })
       this.$store.dispatch('getLunboImgs')
       this.$store.dispatch('getHotTypes')
-      this.$store.dispatch('getAdvertImgs')
       this.$store.dispatch('getCommonImgs')
-      this.$store.dispatch('getOtherImags',()=>{
-        this.$nextTick(()=>{
-          this.myScroll = new BScroll('#indexContent',{
-            click: true
-          })
-        })
-      })
+      this.$store.dispatch('getAdvertImgs')
+      this.$store.dispatch('getOtherImags')
+
+
     },
     computed: {
       ...mapState(['msiteData'])
@@ -140,7 +152,8 @@
       tab(index) {
         this.num = index
         console.log("1231231",this.msiteData.headerMenus)
-      }
+      },
+
     },
     components: {
       MsiteCarousel,

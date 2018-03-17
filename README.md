@@ -26,7 +26,7 @@
 * 数据
   * 从网站直接复制的json数据过于复杂，想要获得具体的某一类数据可以使用数组的filter/map方法先对数据处理后再使用mock模拟数据
   ```javascript
-    //获取每日惊喜模块数据
+    // 获取每日惊喜模块数据
     const dailySale = msite.datas.filter( item => item.index === "3164")[0]
     Mock.mock('/dailysale', {code: 0, data:dailySale})
   ```
@@ -49,4 +49,41 @@
 * 数据还未传入时页面渲染会显示变量”xxx is not undefined“, 在外层标签中加入”v-if = xxx“即可解决
 
 
+## 第四天 03.17
 
+### 进度
+* 完成首页和分类页所有静态页面及数据展示
+
+### 问题
+* 懒加载
+  ```javascript
+      // 在main.js中配置
+      import VueLazyload from 'vue-lazyload'
+      Vue.use(VueLazyload, {
+        loading:require('./common/img/default-epet.jpg')
+      })
+
+      // 使用:将原本的"src"改为"v-lazy"即可
+      <img v-lazy="xxx.jpg"/>
+  ```
+
+* 页面内容显示之前的loading图:使用mint-ui插件的Indicator
+  ```javascript
+        //在main.js中配置
+        import MintUI from 'mint-ui'
+        import 'mint-ui/lib/style.css'
+        Vue.use(MintUI)
+
+        //在需要的组件中添加
+        mounted () {
+          // 打开:Indicator.open()
+          Indicator.open({
+            // 自定义loading图底部的文字
+            text: '数据加载中',
+            // 可选loading图样式:'snake', 'fading-circle', 'double-bounce', 'triple-bounce'
+            spinnerType: 'fading-circle'
+          })
+          // 关闭:Indicator.close(),自定义时间间隔
+          setTimeout(()=>Indicator.close(),1000)
+        }
+  ```

@@ -8,7 +8,9 @@ import {
   reqOtherImgs,
   reqDailySale,
   reqAdvertImgs,
-  reqBrands
+  reqBrands,
+  reqTypesname,
+  reqTypeslist
 } from '../api'
 import {
   RECEIVE_HEADERMENUS,
@@ -18,7 +20,9 @@ import {
   RECEIVE_DAILYSALE,
   RECEIVE_ADVERTIMGS,
   RECEIVE_COMMONIMGS,
-  RECEIVE_BRANDS
+  RECEIVE_BRANDS,
+  RECEIVE_TYPESNAME,
+  RECEIVE_TYPESLIST
 } from './mutation-types'
 /*
  使用async和await的作用:
@@ -86,7 +90,7 @@ export default {
     const result = await reqAdvertImgs()
     if(result.code===0) {
       const advertImgs = result.data.slice(1,6)
-      console.log("advertImgs",advertImgs)
+      //console.log("advertImgs",advertImgs)
       commit(RECEIVE_ADVERTIMGS, {advertImgs})
       callback && callback()
     }
@@ -99,19 +103,39 @@ export default {
       const commonImgs = result.data.filter((item,index) => {
         return index ===0 || index >5
       })
-      console.log("commonImgs",commonImgs)
+      //console.log("commonImgs",commonImgs)
       commit(RECEIVE_COMMONIMGS, {commonImgs})
       callback && callback()
     }
   },
 
-  // 获取3个广告列表数据
+  // 获取品牌列表
   async getBrands({commit}, callback) {
     const result = await reqBrands()
     if(result.code===0) {
       const brands = result.data
-      console.log("brands",brands)
+      //console.log("brands",brands)
       commit(RECEIVE_BRANDS, {brands})
+      callback && callback()
+    }
+  },
+  // 获取分类标题列表
+  async getTypesName({commit}, callback) {
+    const result = await reqTypesname()
+    if(result.code===0) {
+      const typesName = result.data
+      //console.log("typesName",typesName)
+      commit(RECEIVE_TYPESNAME, {typesName})
+      callback && callback()
+    }
+  },
+  // 获取分类内容列表
+  async getTypesList({commit}, callback) {
+    const result = await reqTypeslist()
+    if(result.code===0) {
+      const typesList = result.data
+      //console.log("typesList",typesList)
+      commit(RECEIVE_TYPESLIST, {typesList})
       callback && callback()
     }
   }
