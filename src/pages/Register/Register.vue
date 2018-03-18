@@ -1,5 +1,7 @@
 <template>
-  <div>我的E宠</div>
+  <div>
+    注册
+  </div>
 </template>
 
 <script>

@@ -3,9 +3,8 @@
  */
 import {
   reqHeaderMenus,
+  reqImgslist,
   reqHotTypes,
-  reqLunboImgs,
-  reqOtherImgs,
   reqDailySale,
   reqAdvertImgs,
   reqBrands,
@@ -14,12 +13,10 @@ import {
 } from '../api'
 import {
   RECEIVE_HEADERMENUS,
-  RECEIVE_LUNBOIMGS,
+  RECEIVE_IMGSLIST,
   RECEIVE_HOTTYPES,
-  RECEIVE_OTHERIMGS,
   RECEIVE_DAILYSALE,
   RECEIVE_ADVERTIMGS,
-  RECEIVE_COMMONIMGS,
   RECEIVE_BRANDS,
   RECEIVE_TYPESNAME,
   RECEIVE_TYPESLIST
@@ -44,6 +41,17 @@ export default {
     }
   },
 
+  // 异步获取"图片轮播广告"数据
+  async getImgsList({commit}, callback) {
+    const result = await reqImgslist()
+    if(result.code===0) {
+      const imgsList = result.data
+      commit(RECEIVE_IMGSLIST, {imgsList})
+      callback && callback()
+    }
+  },
+
+/*
   // 异步图片轮播数据
   async getLunboImgs({commit}, callback) {
     const result = await reqLunboImgs()
@@ -54,6 +62,16 @@ export default {
       callback && callback()
     }
   },
+*/
+  /*// 异步获取除去轮播以外的所有静态图片
+   async getOtherImags({commit}, callback) {
+   const result = await reqOtherImgs()
+   if(result.code===0) {
+   const otherImgs = result.data
+   commit(RECEIVE_OTHERIMGS, {otherImgs})
+   callback && callback()
+   }
+   },*/
 
   // 异步获取中部图标导航菜单数据
   async getHotTypes({commit}, callback) {
@@ -61,16 +79,6 @@ export default {
     if(result.code===0) {
       const hotTypes = result.data
       commit(RECEIVE_HOTTYPES, {hotTypes})
-      callback && callback()
-    }
-  },
-
-  // 异步获取除去轮播以外的所有静态图片
-  async getOtherImags({commit}, callback) {
-    const result = await reqOtherImgs()
-    if(result.code===0) {
-      const otherImgs = result.data
-      commit(RECEIVE_OTHERIMGS, {otherImgs})
       callback && callback()
     }
   },
@@ -85,29 +93,16 @@ export default {
     }
   },
 
-  // 异步获取5个活动列表数据
-  async getAdvertImgs({commit}, callback) {
-    const result = await reqAdvertImgs()
-    if(result.code===0) {
-      const advertImgs = result.data.slice(1,6)
-      //console.log("advertImgs",advertImgs)
-      commit(RECEIVE_ADVERTIMGS, {advertImgs})
-      callback && callback()
-    }
-  },
-
-  // 获取3个广告列表数据
-  async getCommonImgs({commit}, callback) {
-    const result = await reqAdvertImgs()
-    if(result.code===0) {
-      const commonImgs = result.data.filter((item,index) => {
-        return index ===0 || index >5
-      })
-      //console.log("commonImgs",commonImgs)
-      commit(RECEIVE_COMMONIMGS, {commonImgs})
-      callback && callback()
-    }
-  },
+// 异步获取8个通用广告模板
+ async getAdvertImgs({commit}, callback) {
+   const result = await reqAdvertImgs()
+   if(result.code===0) {
+   const advertImgs = result.data
+   //console.log("advertImgs",advertImgs)
+   commit(RECEIVE_ADVERTIMGS, {advertImgs})
+   callback && callback()
+   }
+ },
 
   // 获取品牌列表
   async getBrands({commit}, callback) {

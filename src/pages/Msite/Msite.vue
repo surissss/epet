@@ -35,52 +35,34 @@
       </div>
       <div class="indexContent" ref="indexContent" >
         <div class="scrollWrapper">
-          <!--大图轮播-->
-          <MsiteCarousel :carouselImgs="msiteData.lunboImgs[0]"/>
-          <div class="dogImg"><img v-lazy="msiteData.otherImgs[0]"></div>
+          <!--顶部轮播-->
+          <MsiteCarousel :carouselImgs="lunboImgs[0]"/>
+          <CommonImg :imageSrc="otherImgs[0]"/>
+          <!--10个图标导航-->
           <div class="hotTypes">
             <ul>
               <li v-for="(item,index) in msiteData.hotTypes" :key="index"><a href="javascript:;" ><img :src="item.image"></a></li>
             </ul>
           </div>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[1]">
-          </div>
-          <DailySale /> <!--每日惊喜-->
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[2]">
-          </div>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[3]">
-          </div>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[4]">
-          </div>
-          <Activities :itemContainers="msiteData.commonImgs[0]"/>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[5]">
-          </div>
-          <MsiteCarousel :carouselImgs="msiteData.lunboImgs[1]"/>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[6]">
-          </div>
-          <div>
-            <Activities v-for="(itemContainers,index) in msiteData.advertImgs" :key="index" :itemContainers="itemContainers"/> <!--活动组件-->
-          </div>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[7]">
-          </div>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[8]">
-          </div>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[9]">
-          </div>
-          <Activities :itemContainers="msiteData.commonImgs[1]"/>
-          <div class="commonImg">
-            <img v-lazy="msiteData.otherImgs[10]">
-          </div>
-          <Activities :itemContainers="msiteData.commonImgs[2]"/>
+          <CommonImg :imageSrc="otherImgs[1]"/>
+          <!--每日疯抢-->
+          <DailySale />
+          <CommonImg :imageSrc="otherImgs[2]"/>
+          <CommonImg :imageSrc="otherImgs[3]"/>
+          <CommonImg :imageSrc="otherImgs[4]"/>
+          <Activities :itemContainers="msiteData.advertImgs[0]"/>
+          <CommonImg :imageSrc="otherImgs[5]"/>
+          <!--中部轮播-->
+          <MsiteCarousel :carouselImgs="lunboImgs[1]"/>
+          <CommonImg :imageSrc="otherImgs[6]"/>
+          <!--5个左右布局遍历-->
+          <Activities v-for="(itemContainers,index) in flexibleCollection" :key="index" :itemContainers="itemContainers"/>
+          <CommonImg :imageSrc="otherImgs[7]"/>
+          <CommonImg :imageSrc="otherImgs[8]"/>
+          <CommonImg :imageSrc="otherImgs[9]"/>
+          <Activities :itemContainers="msiteData.advertImgs[6]"/>
+          <CommonImg :imageSrc="otherImgs[10]"/>
+          <Activities :itemContainers="msiteData.advertImgs[7]"/>
           <div class="bottom">
             <div class="firstLine">
               <span>触屏版</span>
@@ -103,6 +85,7 @@
   import 'swiper/dist/css/swiper.min.css'
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
+  import CommonImg from '../../components/CommonImg/CommonImg.vue'
   import MsiteCarousel from '../../components/MsiteCarousel/MsiteCarousel.vue'
   import DailySale from '../../components/DailySale/DailySale.vue'
   import Activities from '../../components/Activities/Activities.vue'
@@ -120,15 +103,6 @@
       })
       setTimeout(()=>Indicator.close(),1000)
 
-      if(!this.myScroll) {
-        this.myScroll = new BScroll(this.$refs.indexContent, {
-          click:true
-        })
-      } else {
-        Indicator.close()
-        this.myScroll.refresh()
-      }
-
       this.$store.dispatch('getHeaderMenus',()=>{
         this.$nextTick(()=>{
           var topMenuSwiper = new Swiper('#topMenuSwiper',{
@@ -137,25 +111,53 @@
           })
         })
       })
-      this.$store.dispatch('getLunboImgs')
+      this.$store.dispatch('getImgsList')
       this.$store.dispatch('getHotTypes')
-      this.$store.dispatch('getCommonImgs')
-      this.$store.dispatch('getAdvertImgs')
-      this.$store.dispatch('getOtherImags')
-
+      this.$store.dispatch('getAdvertImgs',()=>{
+        this.$nextTick(()=>{
+          this.myScroll = new BScroll(this.$refs.indexContent, {
+            click:true
+          })
+        })
+      })
 
     },
     computed: {
-      ...mapState(['msiteData'])
+      ...mapState(['msiteData']),
+
+      // 5个集中在一起的左右布局模块
+      flexibleCollection(){
+        const arr = this.msiteData.advertImgs.slice(1,6)
+        return arr
+      },
+
+      // 轮播图片集合
+      lunboImgs () {
+        const arr = this.msiteData.imgsList.filter( item => {
+          return item.index === "3160" || item.index === "3171"
+        }).map(item => {
+          return item.value
+        })
+        return arr
+      },
+      // 轮播以外的“图片轮播广告”数据
+      otherImgs () {
+        const arr = this.msiteData.imgsList.filter(item => {
+          return item.index !== "3160" && item.index !== "3171"
+        }).map(item => {
+          return item.value[0].image
+        })
+        return arr
+      }
+
     },
     methods: {
       tab(index) {
         this.num = index
-        console.log("1231231",this.msiteData.headerMenus)
-      },
-
+      }
     },
     components: {
+      CommonImg,
       MsiteCarousel,
       DailySale,
       Activities
@@ -273,16 +275,6 @@
                     width 100%
                     display block
 
-          .dogImg
-            width 100%
-            img
-              display block
-              width 100%
-          .commonImg
-            width 100%
-            img
-              display block
-              width 100%
           .bottom
             width 100%
             height 86px

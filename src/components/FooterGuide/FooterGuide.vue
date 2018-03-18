@@ -9,8 +9,8 @@
     <span class="guide_item shopcart" @click="goto('/shopcart')">
       <a href="javascript:;" :class="{on: $route.path==='/shopcart'}"></a>
     </span>
-    <span class="guide_item myepet" @click="goto('/myepet')">
-      <a href="javascript:;" :class="{on: $route.path==='/myepet'}"></a>
+    <span class="guide_item myepet" @click="goto('/login')">
+      <a href="javascript:;" :class="{on: $route.path==='/login'}"></a>
     </span>
   </div>
 </template>

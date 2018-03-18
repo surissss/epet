@@ -8,7 +8,8 @@ const Types = () => import('../pages/Classify/Types/Types.vue')
 const Brands = () => import('../pages/Classify/Brands/Brands.vue')
 
 const ShopCart = () => import('../pages/ShopCart/ShopCart.vue')
-const MyEpet = () => import('../pages/MyEpet/MyEpet.vue')
+const Login = () => import('../pages/Login/Login.vue')
+const Register = () => import('../pages/Register/Register.vue')
 
 Vue.use(VueRouter)
 
@@ -54,11 +55,12 @@ export default new VueRouter({
       component: ShopCart,
     },
     {
-      path: '/myepet',
-      component: MyEpet,
-      meta: {
-        showFooter: true
-      }
+      path: '/login',
+      component: Login,
+    },
+    {
+      path: '/register',
+      component: Register,
     },
     {
       path: '/',

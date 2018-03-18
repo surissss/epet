@@ -87,3 +87,31 @@
           setTimeout(()=>Indicator.close(),1000)
         }
   ```
+
+
+## 第五天 03.18
+
+### 进度
+* 完成登录注册静态页面和输入验证
+
+### 问题
+* css样式
+  * 修改<input>中提示文字的颜色
+  ```javascript
+    <style>
+    /*修改提示文字的颜色*/
+    input::-webkit-input-placeholder { /* WebKit browsers */ color: red;}
+    input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color: red; }
+    input::-moz-placeholder { /* Mozilla Firefox 19+ */ color: red; }
+    input:-ms-input-placeholder { /* Internet Explorer 10+ */  color: red; }
+    </style>
+  ```
+  * 按钮被点击时设置背景
+  ```javascript
+    <style>
+      button::active {
+        /*设置渐变色*/
+        background -webkit-gradient(linear, left top, left bottom, from(#f7d781), to(#ffc428))
+      }
+    </style>
+  ```

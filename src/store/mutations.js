@@ -5,46 +5,37 @@ import Vue from 'vue'
 import {
   RECEIVE_HEADERMENUS,
   RECEIVE_HOTTYPES,
-  RECEIVE_LUNBOIMGS,
-  RECEIVE_OTHERIMGS,
+  RECEIVE_IMGSLIST,
   RECEIVE_DAILYSALE,
   RECEIVE_ADVERTIMGS,
-  RECEIVE_COMMONIMGS,
   RECEIVE_BRANDS,
   RECEIVE_TYPESNAME,
   RECEIVE_TYPESLIST
 } from './mutation-types'
 
 export default {
-  [RECEIVE_HEADERMENUS](state, {headerMenus}) {
+  [RECEIVE_HEADERMENUS] (state, {headerMenus}) {
     state.msiteData.headerMenus = headerMenus
   },
-  [RECEIVE_LUNBOIMGS](state, {lunboImgs}) {
-    state.msiteData.lunboImgs = lunboImgs
-    console.log("轮播哈哈哈哈",state.msiteData.lunboImgs)
+  [RECEIVE_IMGSLIST] (state, {imgsList}) {
+    state.msiteData.imgsList = imgsList
   },
-  [RECEIVE_HOTTYPES](state, {hotTypes}) {
+  [RECEIVE_HOTTYPES] (state, {hotTypes}) {
     state.msiteData.hotTypes = hotTypes
   },
-  [RECEIVE_OTHERIMGS](state, {otherImgs}) {
-    state.msiteData.otherImgs = otherImgs
-  },
-  [RECEIVE_DAILYSALE](state, {dailySale}) {
+  [RECEIVE_DAILYSALE] (state, {dailySale}) {
     state.msiteData.dailySale = dailySale
   },
-  [RECEIVE_ADVERTIMGS](state, {advertImgs}) {
+  [RECEIVE_ADVERTIMGS] (state, {advertImgs}) {
     state.msiteData.advertImgs = advertImgs
   },
-  [RECEIVE_COMMONIMGS](state, {commonImgs}) {
-    state.msiteData.commonImgs = commonImgs
-  },
-  [RECEIVE_BRANDS](state, {brands}) {
+  [RECEIVE_BRANDS] (state, {brands}) {
     state.brands = brands
   },
-  [RECEIVE_TYPESNAME](state, {typesName}) {
+  [RECEIVE_TYPESNAME] (state, {typesName}) {
     state.typesName = typesName
   },
-  [RECEIVE_TYPESLIST](state, {typesList}) {
+  [RECEIVE_TYPESLIST] (state, {typesList}) {
     state.typesList = typesList
   }
 }
