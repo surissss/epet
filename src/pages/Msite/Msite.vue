@@ -1,6 +1,6 @@
 <template>
   <div class="msite">
-    <!--<DownloadApp class="Download"/>-->
+    <DownloadApp class="Download"/>
     <div class="indexBox">
       <div class="indexHeader">
         <div class="search">
@@ -74,35 +74,35 @@
           </div>
         </div>
       </div>
-      <div class="goCat"></div>
+      <div class="goCat" @click="show=!show"></div>
+      <transition name="fade">
+        <SwitchType class="show" v-show="show"/>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-  import {Indicator} from 'mint-ui'
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
+  import {setLoading} from '../../common/mixins'
   import CommonImg from '../../components/CommonImg/CommonImg.vue'
   import MsiteCarousel from '../../components/MsiteCarousel/MsiteCarousel.vue'
   import DailySale from '../../components/DailySale/DailySale.vue'
   import Activities from '../../components/Activities/Activities.vue'
-  //import DownloadApp from '../../components/DownloadApp/DownloadApp.vue'
+  import DownloadApp from '../../components/DownloadApp/DownloadApp.vue'
+  import SwitchType from '../../components/SwitchType/SwitchType.vue'
   export default{
     data () {
       return {
-        num: 0
+        num: 0,
+        show: false
       }
     },
+    mixins:[setLoading],
     mounted () {
-      Indicator.open({
-        text: '数据加载中',
-        spinnerType: 'fading-circle'
-      })
-      setTimeout(()=>Indicator.close(),1000)
-
       this.$store.dispatch('getHeaderMenus',()=>{
         this.$nextTick(()=>{
           var topMenuSwiper = new Swiper('#topMenuSwiper',{
@@ -160,7 +160,9 @@
       CommonImg,
       MsiteCarousel,
       DailySale,
-      Activities
+      Activities,
+      DownloadApp,
+      SwitchType
     }
   }
 </script>
@@ -175,13 +177,12 @@
       width 100%
       height 100%
       box-sizing border-box
-      position relative
-      padding-top 86px
-      padding-bottom 46px
+      //padding-top 86px
+      //padding-bottom 132px
       .indexHeader
         width 100%
         background-color #ffffff
-        position fixed
+        position relative
         top 0
         left 0
         right 0
@@ -299,5 +300,16 @@
         position fixed
         bottom 15%
         right -1px
-        z-index 1000
+        z-index 200
+      .show
+        transform scale(0)
+        &.fade-enter-active,&.fade-leave-active
+          transform all 2s
+        &.fade-enter,&.fade-leave-active
+          transform scale(1)
+
+
+
+
+
 </style>

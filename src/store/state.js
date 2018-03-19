@@ -9,4 +9,6 @@ export default {
   brands: [], // 分类页品牌数据
   typesName: [], // 分类标题列表
   typesList: [], // 分类内容列表
+  userInfo: {}, // 用户信息
+  allBrand: [], //全部品牌列表
 }

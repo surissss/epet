@@ -1,9 +1,16 @@
 <template>
-  <div>购物车</div>
+  <div>
+    <CommonHeader :title=" '购物车' "/>
+  </div>
 </template>
 
 <script>
-  export default{}
+  import CommonHeader from '../../components/CommonHeader/CommonHeader.vue'
+  export default{
+    components:{
+      CommonHeader
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

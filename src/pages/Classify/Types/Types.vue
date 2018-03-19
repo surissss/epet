@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import {Indicator} from 'mint-ui'
+  import {setLoading} from '../../../common/mixins'
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
   import TypeContent from '../../../components/TypeContent/TypeContent.vue'
@@ -32,14 +32,8 @@
         num:0
       }
     },
+    mixins:[setLoading],
     mounted(){
-
-      Indicator.open({
-        text: '数据加载中',
-        spinnerType: 'fading-circle'
-      })
-      setTimeout(()=>Indicator.close(),1000)
-
       this.$store.dispatch('getTypesName', () => {
         this.$nextTick(() => {
           if(!this.nameScroll) {

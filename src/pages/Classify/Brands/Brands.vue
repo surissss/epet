@@ -18,21 +18,17 @@
         </div>
       </div>
     </div>
+    <div class="all" @click="goto('/allbrands')"><a href="javascript:;">全部</a></div>
   </div>
 </template>
 
 <script>
-  import {Indicator} from 'mint-ui'
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
+  import {setLoading} from '../../../common/mixins'
   export default{
+    mixins:[setLoading],
     mounted(){
-      Indicator.open({
-        text: '数据加载中',
-        spinnerType: 'fading-circle'
-      })
-      setTimeout(()=>Indicator.close(),1000)
-
       this.$store.dispatch('getBrands',()=>{
         this.$nextTick(()=>{
           this.brandsScroll = new BScroll(this.$refs.brands,{
@@ -43,11 +39,16 @@
     },
     computed:{
       ...mapState(['brands'])
+    },
+    methods:{
+      goto (path) {
+        this.$router.push(path)
+      }
     }
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   .brands
     width 100%
     height 100%
@@ -120,4 +121,17 @@
                   display none
                   &.on
                     display block
+    .all
+      >a
+        position fixed
+        right 6px
+        bottom 65px
+        width 40px
+        height 40px
+        background-color rgba(0,0,0,.4)
+        border-radius 20px
+        color #ffffff
+        font-size 12px
+        line-height 40px
+        text-align center
 </style>

@@ -10,7 +10,9 @@ import {
   RECEIVE_ADVERTIMGS,
   RECEIVE_BRANDS,
   RECEIVE_TYPESNAME,
-  RECEIVE_TYPESLIST
+  RECEIVE_TYPESLIST,
+  RECEIVE_USER_INFO,
+  RECEIVE_ALLBRAND
 } from './mutation-types'
 
 export default {
@@ -37,5 +39,11 @@ export default {
   },
   [RECEIVE_TYPESLIST] (state, {typesList}) {
     state.typesList = typesList
-  }
+  },
+  [RECEIVE_ALLBRAND] (state, {allBrand}) {
+    state.allBrand = allBrand
+  },
+  [RECEIVE_USER_INFO](state, {userInfo}) {
+    state.userInfo = userInfo
+  },
 }

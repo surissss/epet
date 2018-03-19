@@ -26,4 +26,17 @@ export const reqBrands = () => ajax('/brands')
 export const reqTypesname = () => ajax('/typesname')
 // 获取分类内容列表
 export const reqTypeslist = () => ajax('/typeslist')
+// 获取全部品牌列表
+export const reqAllbrand = () => ajax('/allbrand')
 
+
+// 获取一次性验证码
+export const reqCaptcha = () => ajax('/api/captcha')
+// 用户名密码登录
+export const pwdLogin = ({name, pwd, captcha}) => ajax('/api/login_pwd', {name, pwd, captcha}, 'POST')
+// 发送短信验证码
+export const sendCode = (phone) => ajax('/api/sendcode', {phone})
+// 手机号验证码登录
+export const smsLogin = ({phone, code}) => ajax('/api/login_sms', {phone, code}, 'POST')
+// 根据会话获取用户信息
+export const reqUser = () => ajax('/api/userinfo')

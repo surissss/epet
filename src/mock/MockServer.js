@@ -3,6 +3,7 @@ import Mock from 'mockjs'
 import msite from './msite.json'
 import brands from './brands.json'
 import types from './types.json'
+import allBrands from './allBrands.json'
 
 /*
 * 首页数据
@@ -42,12 +43,14 @@ Mock.mock('/brands', {code: 0, data:brands.brand})
 // 分类标题列表
 Mock.mock('/typesname', {code: 0, data:types.name})
 
-
 const list = types.list.map(item =>{
-  var types = item.filter(i => i.type===0)
-  var hotBrands = item.filter(i => i.type===2)
-  var arr = {types,hotBrands}
+  const types = item.filter(i => i.type===0)
+  const hotBrands = item.filter(i => i.type===2)
+  const arr = {types,hotBrands}
   return  arr
 })
 //分类内容列表
 Mock.mock('/typeslist', {code: 0, data:list})
+
+// 全部品牌列表
+Mock.mock('/allbrand', {code: 0, data:allBrands.brand})

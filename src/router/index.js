@@ -10,6 +10,7 @@ const Brands = () => import('../pages/Classify/Brands/Brands.vue')
 const ShopCart = () => import('../pages/ShopCart/ShopCart.vue')
 const Login = () => import('../pages/Login/Login.vue')
 const Register = () => import('../pages/Register/Register.vue')
+const AllBrands = () => import('../pages/AllBrands/AllBrands.vue')
 
 Vue.use(VueRouter)
 
@@ -52,15 +53,19 @@ export default new VueRouter({
     },
     {
       path: '/shopcart',
-      component: ShopCart,
+      component: ShopCart
     },
     {
       path: '/login',
-      component: Login,
+      component: Login
     },
     {
       path: '/register',
-      component: Register,
+      component: Register
+    },
+    {
+      path:'/allbrands',
+      component: AllBrands
     },
     {
       path: '/',

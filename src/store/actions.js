@@ -9,7 +9,8 @@ import {
   reqAdvertImgs,
   reqBrands,
   reqTypesname,
-  reqTypeslist
+  reqTypeslist,
+  reqAllbrand
 } from '../api'
 import {
   RECEIVE_HEADERMENUS,
@@ -19,7 +20,8 @@ import {
   RECEIVE_ADVERTIMGS,
   RECEIVE_BRANDS,
   RECEIVE_TYPESNAME,
-  RECEIVE_TYPESLIST
+  RECEIVE_TYPESLIST,
+  RECEIVE_ALLBRAND
 } from './mutation-types'
 /*
  使用async和await的作用:
@@ -50,28 +52,6 @@ export default {
       callback && callback()
     }
   },
-
-/*
-  // 异步图片轮播数据
-  async getLunboImgs({commit}, callback) {
-    const result = await reqLunboImgs()
-    console.log("轮播",result)
-    if(result.code===0) {
-      const lunboImgs = result.data
-      commit(RECEIVE_LUNBOIMGS, {lunboImgs})
-      callback && callback()
-    }
-  },
-*/
-  /*// 异步获取除去轮播以外的所有静态图片
-   async getOtherImags({commit}, callback) {
-   const result = await reqOtherImgs()
-   if(result.code===0) {
-   const otherImgs = result.data
-   commit(RECEIVE_OTHERIMGS, {otherImgs})
-   callback && callback()
-   }
-   },*/
 
   // 异步获取中部图标导航菜单数据
   async getHotTypes({commit}, callback) {
@@ -133,5 +113,28 @@ export default {
       commit(RECEIVE_TYPESLIST, {typesList})
       callback && callback()
     }
-  }
+  },
+
+  // 获取全部品牌列表
+  async getAllBrand({commit}, callback) {
+    const result = await reqAllbrand()
+    if(result.code===0) {
+      const allBrand = result.data
+      //console.log("1232",allBrand)
+      commit(RECEIVE_ALLBRAND, {allBrand})
+      callback && callback()
+    }
+  },
+
+  // 保存userInfo
+  recordUserInfo ({commit}, userInfo) {
+    commit(RECEIVE_USER_INFO, {userInfo})
+  },
+  // 异步获取用户信息
+  async getUserInfo ({commit}) {
+    const result = await reqUser()
+    if(result.code===0) {
+      commit(RECEIVE_USER_INFO, {userInfo: result.data})
+    }
+  },
 }
